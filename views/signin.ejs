@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <title><%= title %></title>
-   </head>
-   <body>
-      <h2><%= title %></h2>
-      <form method="post" action="/users/signin">
-         <span><%= error %></span>
-         <p>
-            <input type="text" name="username" id="username"
-               placeholder="ID（例：k123456）" required="true"/>
-         </p>
-         <p>
-            <input type="password" name="password" id="password"
-               placeholder="パスワード" required="true"/>
-         </p>
-         <p>
-            <input type="submit" name="signin" id="signin" value="ログイン"/>
-            <a href="/users/signup" title="signup">新規登録</a>
-         </p>
-      </form>
-   </body>
+  <head>
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h2><%= title %></h2>
+    <form method="post" action="/users/signin">
+      <span><%= error %></span>
+      <p>
+        <input type="text" name="username" id="username"
+          placeholder="ID（例：k123456）" required="true"/>
+      </p>
+      <p>
+        <input type="password" name="password" id="password"
+          placeholder="パスワード" required="true"/>
+      </p>
+      <p>
+        <input type="submit" name="signin" id="signin" value="ログイン"/>
+        <a href="/users/signup" title="signup">新規登録</a>
+      </p>
+    </form>
+  </body>
 </html>
