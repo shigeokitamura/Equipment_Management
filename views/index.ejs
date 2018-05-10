@@ -7,5 +7,13 @@
   <body>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
+
+    <% if(!user){ %>
+   		<a href='/users/login'>ログイン</a><br>
+   		<a href='/users/signup'>新規登録</a>
+ 	<% } else{ %>
+ 	    <a href='/users/<%= user.id %>/profile'><%= user.username %></a><br>
+   		<a href='/users/logout'>Logout</a>
+	<% } %>
   </body>
 </html>

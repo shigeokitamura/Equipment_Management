@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <title>松下組備品管理システム - <%= title %></title>
+   </head>
+   <body>
+      <h1><%= title %></h1>
+      <form action="/users/signup" method='post'>
+        <fieldset>
+        <input type="text" name="userid" id="userid" placeholder="ID（例：k123456）" required="true"/><br>
+        <input type="text" name='username' id='username' placeholder='名前（例：松下光範）' required='true'><br>
+        <input type="password" name='password' id='password' placeholder='パスワード' required='true'><br>
+        <input type="password" name='password_confirm' id='password_confirm' placeholder='パスワード（確認）' required='true'><br>
+        <%= error %><br>
+        学年
+        <select name="grade" id="grade">
+          <option value="1">B3</option>
+          <option value="2">B4</option>
+          <option value="3">M1</option>
+          <option value="4">M2</option>
+          <option value="5">D1</option>
+          <option value="6">D2</option>
+          <option value="7">D3</option>
+          <option value="8">教授</option>
+        </select>
+        <br>
+        <input type="submit" value="登録">
+        </fieldset>
+      </form>
+   </body>
+</html>
