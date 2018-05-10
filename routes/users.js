@@ -1,7 +1,7 @@
-var express = require('express');
-var router = express.Router();
-var User = require('../models/user');
-var passport = require('passport');
+const express = require('express');
+const router = express.Router();
+const User = require('../models/user');
+const passport = require('passport');
 const sqlite3 = require('sqlite3');
 const crypto = require('crypto');
 
@@ -12,10 +12,10 @@ global.encrypt = password => {
   return hash;
 }
 
-router.get('/', function(req, res, next) {
+router.get('/', (req, res, next) => {
   User
   .findAll()
-  .then(function(users) {
+  .then(users => {
     res.render('signup', {
       title: 'User Register',
       users: users,
@@ -24,7 +24,7 @@ router.get('/', function(req, res, next) {
   });
 });
 
-router.get('/login', function(req, res, next) {
+router.get('/login', (req, res, next) => {
    if(req.isAuthenticated()) return res.redirect('/');
    res.render('signin',
    {
@@ -39,27 +39,27 @@ router.post('/signin', passport.authenticate('local', {
   failureFlash: true
 }));
 
-router.get('/signup', function(req, res, next) {
+router.get('/signup', (req, res, next) => {
   res.render('signup', {
     title: '新規登録',
     error: req.flash('error')
   });
 });
 
-router.get('/logout', function(req, res) {
+router.get('/logout', (req, res) => {
     req.logout();
     res.redirect('/');
 });
 
-router.get('/:user_id/destroy', function(req, res, next) {
+router.get('/:user_id/destroy', (req, res, next) => {
   User.destroy({
     where: {id: req.params.user_id}
-  }).then(function() {
+  }).then(() => {
       res.redirect('/users');
     });
 });
 
-router.get('/:user_id/profile', function(req, res, next) {
+router.get('/:user_id/profile', (req, res, next) => {
   User
   .findOne({ where: {id: req.params.user_id } })
   .then(user => {
@@ -67,23 +67,23 @@ router.get('/:user_id/profile', function(req, res, next) {
   });
 });
 
-router.post('/signup', function(req, res, next) {
+router.post('/signup', (req, res, next) => {
   if (req.body.password != req.body.password_confirm) {
     req.flash('error', 'パスワードが一致しません');
     res.redirect('/users/signup')
   } else {
     User.findOne({where: {userid : req.body.userid} })
     .then(user => {
-        if (!user){
-          req.body.password = encrypt(req.body.password);
-          User.create(req.body)
-          .then(function(user) {
-              res.redirect('/');
-          });
-        } else {
-          req.flash('error', '既に登録されています');
-          res.redirect('/users/signup');;
-        }
+      if (!user){
+        req.body.password = encrypt(req.body.password);
+        User.create(req.body)
+        .then(user => {
+            res.redirect('/');
+        });
+      } else {
+        req.flash('error', '既に登録されています');
+        res.redirect('/users/signup');;
+      }
     });
   }
 });
