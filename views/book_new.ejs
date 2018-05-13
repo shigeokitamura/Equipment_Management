@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>松下組備品管理システム - <%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/javascripts/book.js"></script>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <form action="/books/new" method='post'>
+      <fieldset>
+        ISBN：
+        <input type="text" name="isbn" id="isbn" required="true"/>
+        <button type="button" name="button" onclick="searchISBN()">検索</button>
+        <br>
+        タイトル：
+        <input type="text" name="title" id="title" required="true"/><br>
+        著者：
+        <input type="text" name="authors" id="authors" required="true"/><br>
+        説明：
+        <textarea name="description" id="description"/></textarea><br>
+        カテゴリ：
+        <input type="text" name="categories" id="categories"/><br>
+        購入日：
+        <input type="text" name="boughtAt" id="boughtAt"/><br>
+        数量：
+        <input type="number" name="stock" id="stock"  value="1" min="1"/><br>
+        画像：
+        <input type="text" name="thumbnail" id="thumbnail"/>
+        <button type="button" name="button" onclick="setImage()">表示</button>
+        <br>
+        <img src="" class="thumbnail"><br>
+        <input type="submit" value="登録">
+      </fieldset>
+    </form>
+  </body>
+</html>

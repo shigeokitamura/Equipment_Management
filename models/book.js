@@ -34,4 +34,5 @@ const BookManage = sequelize.define('BookManage', {
   returnedAt: Sequelize.DATE
 });
 
-module.exports = Book;
+module.exports.info = BookInfo;
+module.exports.manage = BookManage;

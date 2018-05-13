@@ -82,7 +82,7 @@ router.post('/signup', (req, res, next) => {
         });
       } else {
         req.flash('error', '既に登録されています');
-        res.redirect('/users/signup');;
+        res.redirect('/users/signup');
       }
     });
   }
