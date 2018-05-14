@@ -10,11 +10,17 @@ const isAuthenticated = (req, res, next) => {
 router.get('/', (req, res, next) => {
   Book.info
   .findAll()
-  .then(books => {
-    res.render('book_list', {
-      title: '本一覧',
-      books: books,
-      error: req.flash('error')
+  .then(books_info => {
+    Book.manage
+    .findAll()
+    .then(books_manage => {
+      res.render('book_list', {
+        title: '本一覧',
+        user: req.user,
+        books_info: books_info,
+        books_manage: books_manage,
+        error: req.flash('error')
+      });
     });
   });
 });
@@ -23,7 +29,8 @@ router.get('/new', (req, res, next) => {
   res.render('book_new',
   {
     title: '本新規登録',
-    error: req.flash('error')
+    error: req.flash('error'),
+    user: req.user
   });
 });
 
@@ -45,5 +52,23 @@ router.post('/new', (req, res, next) => {
   });
 });
 
+router.get('/checkout/:book_id', (req, res, next) => {
+  Book.info
+  .findOne({ where: {id: req.params.book_id } })
+  .then(book_info => {
+    Book.manage
+    .findOne({ where: {id: req.params.book_id } })
+    .then(book_manage => {
+      res.render('book_checkout',
+      {
+        title: '本の詳細',
+        error: req.flash('error'),
+        user: req.user,
+        book_info: book_info,
+        book_manage: book_manage
+      });
+    });
+  });
+});
 
 module.exports = router;

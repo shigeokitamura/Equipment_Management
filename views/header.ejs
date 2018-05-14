@@ -1,0 +1,9 @@
+<% if (user) { %>
+  <% const grade = ['admin', 'B3', 'B4', 'M1', 'M2', 'D1', 'D2', 'D3', '教授']; %>
+  <p><%= user.username %>（<%= grade[user.grade]%>）</p>
+  <p><a href="/users/logout">ログアウト</a></p>
+<% } else { %>
+  <p>ログインしていません</p>
+  <p><a href="/users/login">ログイン</a></p>
+  <p><a href="/users/signup">新規登録</a></p>
+<% } %>

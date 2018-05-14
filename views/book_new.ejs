@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
   <head>
     <title>松下組備品管理システム - <%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
@@ -7,6 +7,7 @@
     <script src="/javascripts/book.js"></script>
   </head>
   <body>
+    <%- include('./header', {user: user}) %>
     <h1><%= title %></h1>
     <form action="/books/new" method='post'>
       <fieldset>
@@ -31,6 +32,7 @@
         <button type="button" name="button" onclick="setImage()">表示</button>
         <br>
         <img src="" class="thumbnail"><br>
+        <%= error %><br>
         <input type="submit" value="登録">
       </fieldset>
     </form>

@@ -1,16 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
   <head>
     <title>松下組備品管理システム - <%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
+    <%- include('./header', {user: user}) %>
     <h1><%= title %></h1>
+    <table border="1">
+      <tr>
+        <th>画像</th>
+        <th>題名</th>
+        <th>著者</th>
+        <th>カテゴリ</th>
+        <th>在庫</th>
+        <th>借りている人</th>
+      </tr>
+      <% for(var i=0; i<books_info.length; i++) { %>
+        <tr>
+          <td><img src="<%= books_info[i].thumbnail %>"></td>
+          <td><a href="/books/checkout/<%= books_info[i].id %>"><%= books_info[i].title %></a></td>
+          <td><%= books_info[i].authors %></td>
+          <td><%= books_info[i].categories %></td>
+          <td><%= books_manage[i].stock %></td>
+          <td><%= books_manage[i].borrowedBy %></td>
+        </tr>
+      <% } %>
+    </table>
 
-    <% for(var i=0; i<books.length; i++) { %>
-      <li>
-        <%= books[i].title %>
-      </li>
-    <% } %>
   </body>
 </html>

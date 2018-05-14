@@ -1,19 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
+    <%- include('./header', {user: user}) %>
     <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-
-    <% if(!user){ %>
-   		<a href='/users/login'>ログイン</a><br>
-   		<a href='/users/signup'>新規登録</a>
-    <% } else{ %>
- 	    <a href='/users/<%= user.id %>/profile'><%= user.username %></a><br>
-   		<a href='/users/logout'>Logout</a>
-    <% } %>
+    <p><a href='/books'>本一覧</a></p>
+    <p><a href='/books/new'>本の新規登録</a></p>
   </body>
 </html>
