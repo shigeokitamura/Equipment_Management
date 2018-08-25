@@ -3,53 +3,70 @@
   <head>
     <title>松下組備品管理システム - <%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/javascripts/book_checkout.js"></script>
   </head>
   <body>
     <%- include('./header', {user: user}) %>
     <h1><%= title %></h1>
-    <table border=1>
-      <tr>
-        <td rowspan="10"><img src="<%= book_info.thumbnail %>"></td>
-        <th>題名</th>
-        <td><%= book_info.title %></td>
-      </tr>
-      <tr>
-        <th>著者</th>
-        <td><%= book_info.authors %></td>
-      </tr>
-      <tr>
-        <th>カテゴリ</th>
-        <td><%= book_info.categories %></td>
-      </tr>
-      <tr>
-        <th>説明</th>
-        <td><%= book_info.description %></td>
-      </tr>
-      <tr>
-        <th>購入日</th>
-        <td><%= book_manage.boughtAt %></td>
-      </tr>
-      <tr>
-        <th>在庫</th>
-        <td><%= book_manage.stock %></td>
-      </tr>
-      <tr>
-        <th>借りている人</th>
-        <td><%= book_manage.borrowedBy %></td>
-      </tr>
-      <tr>
-        <th>貸出日</th>
-        <td><%= book_manage.borrowedAt %></td>
-      </tr>
-      <tr>
-        <th>最終返却者</th>
-        <td><%= book_manage.returnedBy %></td>
-      </tr>
-      <tr>
-        <th>返却日</th>
-        <td><%= book_manage.returnedAt %></td>
-      </tr>
-    </table>
-
+    <form method="get" action="/books/checkout">
+      <p>
+        ISBN:
+        <input type="text" name="isbn" id="isbn" required="true"/>
+        <button type="button" name="button" onclick="searchISBN()">検索</button>
+      </p>
+    </form>
+    <%= error %>
+    <% if (book_info) { %>
+      <table border=1>
+        <tr>
+          <td rowspan="10"><img src="<%= book_info.thumbnail %>"></td>
+          <th>題名</th>
+          <td><%= book_info.title %></td>
+        </tr>
+        <tr>
+          <th>著者</th>
+          <td><%= book_info.authors %></td>
+        </tr>
+        <tr>
+          <th>カテゴリ</th>
+          <td><%= book_info.categories %></td>
+        </tr>
+        <tr>
+          <th>説明</th>
+          <td><%= book_info.description %></td>
+        </tr>
+        <tr>
+          <th>購入日</th>
+          <td><%= book_manage.boughtAt %></td>
+        </tr>
+        <tr>
+          <th>在庫</th>
+          <td><%= book_manage.stock %></td>
+        </tr>
+        <tr>
+          <th>借りている人</th>
+          <td><%= book_manage.borrowedBy %></td>
+        </tr>
+        <tr>
+          <th>貸出日</th>
+          <td><%= book_manage.borrowedAt %></td>
+        </tr>
+        <tr>
+          <th>最終返却者</th>
+          <td><%= book_manage.returnedBy %></td>
+        </tr>
+        <tr>
+          <th>返却日</th>
+          <td><%= book_manage.returnedAt %></td>
+        </tr>
+      </table>
+      <% if (book_manage.stock > 0) { %>
+        <form method="post" action="/books/checkout">
+          <input type="hidden" name="isbn" value="<%= book_info.isbn %>"/>
+          <input type="submit" value="借りる">
+        </form>
+      <% } %>
+    <% } %>
   </body>
 </html>

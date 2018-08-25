@@ -19,7 +19,7 @@
       <% for(var i=0; i<books_info.length; i++) { %>
         <tr>
           <td><img src="<%= books_info[i].thumbnail %>"></td>
-          <td><a href="/books/checkout/<%= books_info[i].id %>"><%= books_info[i].title %></a></td>
+          <td><a href="/books/detail/<%= books_info[i].id %>"><%= books_info[i].title %></a></td>
           <td><%= books_info[i].authors %></td>
           <td><%= books_info[i].categories %></td>
           <td><%= books_manage[i].stock %></td>

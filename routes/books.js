@@ -52,14 +52,14 @@ router.post('/new', (req, res, next) => {
   });
 });
 
-router.get('/checkout/:book_id', (req, res, next) => {
+router.get('/detail/:book_id', (req, res, next) => {
   Book.info
   .findOne({ where: {id: req.params.book_id } })
   .then(book_info => {
     Book.manage
     .findOne({ where: {id: req.params.book_id } })
     .then(book_manage => {
-      res.render('book_checkout',
+      res.render('book_detail',
       {
         title: '本の詳細',
         error: req.flash('error'),
@@ -69,6 +69,52 @@ router.get('/checkout/:book_id', (req, res, next) => {
       });
     });
   });
+});
+
+router.get('/checkout', (req, res, next) => {
+  if (req.query.isbn) {
+    Book.info
+    .findOne({ where: {isbn: req.query.isbn } })
+    .then(book_info => {
+      if (book_info) { // 本が見つかった
+        Book.manage
+        .findOne({ where: {isbn: req.query.isbn } })
+        .then(book_manage => {
+          res.render('book_checkout',
+          {
+            title: '本を借りる',
+            error: req.flash('error'),
+            user: req.user,
+            book_info: book_info,
+            book_manage: book_manage
+          });
+        });
+      } else { // 本が見つからなかった
+        req.flash('error', '本が見つかりませんでした．');
+        res.render('book_checkout',
+        {
+          title: '本を借りる',
+          error: req.flash('error'),
+          user: req.user,
+          book_info: null,
+          book_manage: null
+        });
+      }
+    });
+  } else {
+    res.render('book_checkout',
+    {
+      title: '本を借りる',
+      error: req.flash('error'),
+      user: req.user,
+      book_info: null,
+      book_manage: null
+    });
+  }
+});
+
+router.post('/checkout', isAuthenticated, (req, res, next) => {
+
 });
 
 module.exports = router;

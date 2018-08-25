@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <title>松下組備品管理システム - <%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <%- include('./header', {user: user}) %>
+    <h1><%= title %></h1>
+    <table border=1>
+      <tr>
+        <td rowspan="10"><img src="<%= book_info.thumbnail %>"></td>
+        <th>題名</th>
+        <td><%= book_info.title %></td>
+      </tr>
+      <tr>
+        <th>著者</th>
+        <td><%= book_info.authors %></td>
+      </tr>
+      <tr>
+        <th>カテゴリ</th>
+        <td><%= book_info.categories %></td>
+      </tr>
+      <tr>
+        <th>説明</th>
+        <td><%= book_info.description %></td>
+      </tr>
+      <tr>
+        <th>購入日</th>
+        <td><%= book_manage.boughtAt %></td>
+      </tr>
+      <tr>
+        <th>在庫</th>
+        <td><%= book_manage.stock %></td>
+      </tr>
+      <tr>
+        <th>借りている人</th>
+        <td><%= book_manage.borrowedBy %></td>
+      </tr>
+      <tr>
+        <th>貸出日</th>
+        <td><%= book_manage.borrowedAt %></td>
+      </tr>
+      <tr>
+        <th>最終返却者</th>
+        <td><%= book_manage.returnedBy %></td>
+      </tr>
+      <tr>
+        <th>返却日</th>
+        <td><%= book_manage.returnedAt %></td>
+      </tr>
+    </table>
+
+  </body>
+</html>
