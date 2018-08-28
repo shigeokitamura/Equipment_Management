@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Book = require('../models/book');
+const User = require('../models/user');
 
 const isAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) return next();
@@ -59,13 +60,17 @@ router.get('/detail/:book_id', (req, res, next) => {
     Book.manage
     .findOne({ where: {id: req.params.book_id } })
     .then(book_manage => {
-      res.render('book_detail',
-      {
-        title: '本の詳細',
-        error: req.flash('error'),
-        user: req.user,
-        book_info: book_info,
-        book_manage: book_manage
+      User.findOne({ where: {userid: book_manage.borrowedBy} })
+      .then(user => {
+        res.render('book_detail',
+        {
+          title: '本の詳細',
+          error: req.flash('error'),
+          user: req.user,
+          book_info: book_info,
+          book_manage: book_manage,
+          book_user: user
+        });
       });
     });
   });
@@ -114,7 +119,23 @@ router.get('/checkout', (req, res, next) => {
 });
 
 router.post('/checkout', isAuthenticated, (req, res, next) => {
-
+  //res.send(req.body);
+  const date = new Date();
+  const date_str = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+  Book.manage
+  .findOne({ where: {isbn: req.body.isbn } })
+  .then(book_manage => {
+    if(book_manage.stock <= 0) {
+      res.send('ERROR');
+    } else {
+      Book.manage
+      .update({borrowedBy: req.body.user, stock: book_manage.stock - 1, borrowedAt: date_str}, {where: {id: book_manage.id} })
+      .then((result) => {
+        console.log(result);
+        res.redirect('/books');
+      });
+    }
+  });
 });
 
 module.exports = router;

@@ -3,6 +3,32 @@
   <head>
     <title>松下組備品管理システム - <%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script type="text/javascript">
+      function check(user, isbn) {
+        if(window.confirm('この本を借りますか？')) {
+          const form = document.createElement('form');
+          const req_user = document.createElement('input');
+          const req_isbn = document.createElement('input');
+
+          form.method = 'POST';
+          form.action = '/books/checkout';
+
+          req_user.type = 'hidden';
+          req_user.name = 'user';
+          req_user.value = user;
+
+          req_isbn.type = 'hidden';
+          req_isbn.name = 'isbn';
+          req_isbn.value = isbn;
+
+          form.appendChild(req_user);
+          form.appendChild(req_isbn);
+          document.body.appendChild(form);
+
+          form.submit();
+        }
+      }
+    </script>
   </head>
   <body>
     <%- include('./header', {user: user}) %>
@@ -35,7 +61,7 @@
       </tr>
       <tr>
         <th>借りている人</th>
-        <td><%= book_manage.borrowedBy %></td>
+        <td><%= book_user.username %></td>
       </tr>
       <tr>
         <th>貸出日</th>
@@ -50,6 +76,12 @@
         <td><%= book_manage.returnedAt %></td>
       </tr>
     </table>
-
+    <% if (book_manage.stock > 0) { %>
+      <!-- <form method="post" action="/books/checkout">
+        <input type="hidden" name="isbn" value="<%= book_info.isbn %>"/>
+        <input type="submit" value="借りる">
+      </form> -->
+      <input type='button' value='借りる' onClick='check("<%= user.userid %>", <%= book_info.isbn %>)'>
+    <% } %>
   </body>
 </html>
