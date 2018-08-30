@@ -12,18 +12,6 @@
           $('#isbn').val(isbn);
         }
       });
-      $(window).on('load', () => {
-        if ($('#returnedBy').text()) {
-          $.ajax({
-              url: '/users/userid_to_username?userid=' + $('#returnedBy').text(),
-              type: 'GET',
-              timeout: 10000
-          }).done(data => {
-              console.log(data);
-              $('#returnedBy').text(data);
-          });
-        }
-      });
     </script>
   </head>
   <body>
@@ -38,7 +26,7 @@
     </form>
     <%= error %>
     <% if (book_info) { %>
-      <%- include('./book_info', {user: user, book_info: book_info, book_manage: book_manage, book_user: book_user}) %>
+      <%- include('./book_info', {user: user, book_info: book_info, book_manage: book_manage}) %>
     <% } %>
   </body>
 </html>

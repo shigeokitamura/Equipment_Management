@@ -5,22 +5,10 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="/javascripts/book.js"></script>
-    <script type="text/javascript">
-    $(window).on('load', () => {
-      $.ajax({
-          url: '/users/userid_to_username?userid=' + $('#returnedBy').text(),
-          type: 'GET',
-          timeout: 10000
-      }).done(data => {
-          console.log(data);
-          $('#returnedBy').text(data);
-      });
-    });
-    </script>
   </head>
   <body>
     <%- include('./header', {user: user}) %>
     <h1><%= title %></h1>
-    <%- include('./book_info', {user: user, book_info: book_info, book_manage: book_manage, book_user: book_user}) %>
+    <%- include('./book_info', {user: user, book_info: book_info, book_manage: book_manage}) %>
   </body>
 </html>

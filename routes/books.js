@@ -65,17 +65,13 @@ router.get('/detail/:book_id', (req, res, next) => {
     Book.manage
     .findOne({ where: {id: req.params.book_id } })
     .then(book_manage => {
-      User.findOne({ where: {userid: book_manage.borrowedBy} })
-      .then(user => {
-        res.render('book_detail',
-        {
-          title: '本の詳細',
-          error: req.flash('error'),
-          user: req.user,
-          book_info: book_info,
-          book_manage: book_manage,
-          book_user: user
-        });
+      res.render('book_detail',
+      {
+        title: '本の詳細',
+        error: req.flash('error'),
+        user: req.user,
+        book_info: book_info,
+        book_manage: book_manage
       });
     });
   });
@@ -90,17 +86,13 @@ router.get('/checkout', (req, res, next) => {
         Book.manage
         .findOne({ where: {isbn: req.query.isbn } })
         .then(book_manage => {
-          User.findOne({ where: {userid: book_manage.borrowedBy} })
-          .then(user => {
-            res.render('book_checkout',
-            {
-              title: '本を借りる',
-              error: req.flash('error'),
-              user: req.user,
-              book_info: book_info,
-              book_manage: book_manage,
-              book_user: user
-            });
+          res.render('book_checkout',
+          {
+            title: '本を借りる',
+            error: req.flash('error'),
+            user: req.user,
+            book_info: book_info,
+            book_manage: book_manage
           });
         });
       } else { // 本が見つからなかった
@@ -138,13 +130,13 @@ router.post('/checkout', isAuthenticated, (req, res, next) => {
       res.send('ERROR');
     } else {
       let username = book_manage.borrowedBy;
-      if (username) {  //既に借りている人がいたら,で区切る
+      if (username != '') {  //既に借りている人がいたら,で区切る
         username += ',';
       }
       username += req.body.user;
       Book.manage
       .update({
-        borrowedBy: req.body.user,
+        borrowedBy: username,
         stock: book_manage.stock - 1,
         borrowedAt: date_str
       },
@@ -190,13 +182,20 @@ router.post('/return', isAuthenticated, (req, res, next) => {
   .findOne({ where: {isbn: req.body.isbn} })
   .then(book_manage => {
     const users = book_manage.borrowedBy.split(',');
-    const users_array = users.filter(id => id !== req.body.user);
-    const users_new = users_array.join(',');
+    const index = users.indexOf(req.body.user);
+    if (index > -1) {
+      users.splice(index, 1);
+    }
+    const users_new = users.join(',');
+    let borrowedAt = book_manage.borrowedAt;
+    if (users_new == '') {
+      borrowedAt = null;
+    }
     Book.manage
     .update({
       stock: book_manage.stock + 1,
       borrowedBy: users_new,
-      borrowedAt: null,
+      borrowedAt: borrowedAt,
       returnedBy: req.body.user,
       returnedAt: date_str
     },

@@ -26,11 +26,7 @@
   </tr>
   <tr>
     <th>借りている人</th>
-    <td>
-      <% if (book_user) { %>
-        <%= book_user.username %>
-      <% } %>
-    </td>
+    <td id=borrowedBy><%= book_manage.borrowedBy %></td>
   </tr>
   <tr>
     <th>貸出日</th>

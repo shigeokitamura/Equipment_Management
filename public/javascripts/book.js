@@ -1,3 +1,33 @@
+$(window).on('load', () => {
+  if ($('#borrowedBy').text() != "") {
+    const users = $('#borrowedBy').text().split(',');
+    $('#borrowedBy').text('');
+    users.forEach((user, idx) => {
+      $.ajax({
+          url: '/users/userid_to_username?userid=' + user,
+          type: 'GET',
+          timeout: 10000
+      }).done(data => {
+          //console.log(data);
+          $('#borrowedBy').append(data);
+          if (idx != users.length - 1) {
+            $('#borrowedBy').append('，');
+          }
+      });
+    });
+  }
+  if ($('#returnedBy').text() != "") {
+    $.ajax({
+        url: '/users/userid_to_username?userid=' + $('#returnedBy').text(),
+        type: 'GET',
+        timeout: 10000
+    }).done(data => {
+        //console.log(data);
+        $('#returnedBy').text(data);
+    });
+  }
+});
+
 function searchISBNfromGoogle() {
   console.log('ISBNを検索します．');
   const isbn = $('#isbn').val();
