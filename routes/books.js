@@ -31,7 +31,7 @@ router.get('/', (req, res, next) => {
   });
 });
 
-router.get('/new', (req, res, next) => {
+router.get('/new', isAuthenticated, (req, res, next) => {
   res.render('book_new',
   {
     title: '本新規登録',
@@ -40,7 +40,7 @@ router.get('/new', (req, res, next) => {
   });
 });
 
-router.post('/new', (req, res, next) => {
+router.post('/new', isAuthenticated, (req, res, next) => {
   Book.manage.findOne({where: {isbn: req.body.isbn} })
   .then(book => {
     if (!book) {
@@ -77,7 +77,7 @@ router.get('/detail/:book_id', (req, res, next) => {
   });
 });
 
-router.get('/checkout', (req, res, next) => {
+router.get('/checkout', isAuthenticated, (req, res, next) => {
   if (req.query.isbn) {
     Book.info
     .findOne({ where: {isbn: req.query.isbn } })
