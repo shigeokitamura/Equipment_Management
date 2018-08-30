@@ -88,4 +88,14 @@ router.post('/signup', (req, res, next) => {
   }
 });
 
+router.get('/userid_to_username', (req, res, next) => {
+  console.log(req.query.userid);
+  User.findOne({ where: {userid: req.query.userid} })
+  .then(user => {
+    if (user) {
+      res.send(user.username);
+    }
+  });
+});
+
 module.exports = router;

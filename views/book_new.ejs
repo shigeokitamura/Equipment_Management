@@ -5,6 +5,16 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="/javascripts/book.js"></script>
+    <script type="text/javascript">
+      $(document).ready(() => {
+        const date = new Date();
+        $('#boughtAt').val(
+          date.getFullYear() + '-' +
+          (date.getMonth() + 1) + '-' +
+          date.getDate()
+        );
+      });
+    </script>
   </head>
   <body>
     <%- include('./header', {user: user}) %>
@@ -13,7 +23,7 @@
       <fieldset>
         ISBN：
         <input type="text" name="isbn" id="isbn" required="true"/>
-        <button type="button" name="button" onclick="searchISBN()">検索</button>
+        <button type="button" name="button" onclick="searchISBNfromGoogle()">検索</button>
         <br>
         タイトル：
         <input type="text" name="title" id="title" required="true"/><br>

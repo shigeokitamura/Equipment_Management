@@ -6,7 +6,7 @@ const User = require('../models/user');
 const isAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) return next();
   else return res.redirect('/');
-};
+}
 
 router.get('/', (req, res, next) => {
   Book.info
@@ -15,12 +15,17 @@ router.get('/', (req, res, next) => {
     Book.manage
     .findAll()
     .then(books_manage => {
-      res.render('book_list', {
-        title: '本一覧',
-        user: req.user,
-        books_info: books_info,
-        books_manage: books_manage,
-        error: req.flash('error')
+      User
+      .findAll()
+      .then(user => {
+        res.render('book_list', {
+          title: '本一覧',
+          user: req.user,
+          books_info: books_info,
+          books_manage: books_manage,
+          books_user: user,
+          error: req.flash('error')
+        });
       });
     });
   });
@@ -85,13 +90,17 @@ router.get('/checkout', (req, res, next) => {
         Book.manage
         .findOne({ where: {isbn: req.query.isbn } })
         .then(book_manage => {
-          res.render('book_checkout',
-          {
-            title: '本を借りる',
-            error: req.flash('error'),
-            user: req.user,
-            book_info: book_info,
-            book_manage: book_manage
+          User.findOne({ where: {userid: book_manage.borrowedBy} })
+          .then(user => {
+            res.render('book_checkout',
+            {
+              title: '本を借りる',
+              error: req.flash('error'),
+              user: req.user,
+              book_info: book_info,
+              book_manage: book_manage,
+              book_user: user
+            });
           });
         });
       } else { // 本が見つからなかった
@@ -128,13 +137,75 @@ router.post('/checkout', isAuthenticated, (req, res, next) => {
     if(book_manage.stock <= 0) {
       res.send('ERROR');
     } else {
+      let username = book_manage.borrowedBy;
+      if (username) {  //既に借りている人がいたら,で区切る
+        username += ',';
+      }
+      username += req.body.user;
       Book.manage
-      .update({borrowedBy: req.body.user, stock: book_manage.stock - 1, borrowedAt: date_str}, {where: {id: book_manage.id} })
-      .then((result) => {
+      .update({
+        borrowedBy: req.body.user,
+        stock: book_manage.stock - 1,
+        borrowedAt: date_str
+      },
+        {where: {id: book_manage.id}
+      })
+      .then(result => {
         console.log(result);
         res.redirect('/books');
       });
     }
+  });
+});
+
+router.get('/return', isAuthenticated, (req, res, next) => {
+  const regex = '%' + req.user.userid + '%';
+  Book.info
+  .findAll()
+  .then(books_info => {
+    Book.manage
+    .findAll({
+      where: {
+        borrowedBy: {
+          $like: regex
+        }
+      }
+    }).then(books_manage => {
+      res.render('book_return',
+      {
+        title: '本を返却する',
+        error: req.flash('error'),
+        user: req.user,
+        books_info: books_info,
+        books_manage: books_manage
+      });
+    });
+  });
+});
+
+router.post('/return', isAuthenticated, (req, res, next) => {
+  const date = new Date();
+  const date_str = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+  Book.manage
+  .findOne({ where: {isbn: req.body.isbn} })
+  .then(book_manage => {
+    const users = book_manage.borrowedBy.split(',');
+    const users_array = users.filter(id => id !== req.body.user);
+    const users_new = users_array.join(',');
+    Book.manage
+    .update({
+      stock: book_manage.stock + 1,
+      borrowedBy: users_new,
+      borrowedAt: null,
+      returnedBy: req.body.user,
+      returnedAt: date_str
+    },
+      {where: {id: book_manage.id}
+    })
+    .then(result => {
+      console.log(result);
+      res.redirect('/books/return');
+    });
   });
 });
 

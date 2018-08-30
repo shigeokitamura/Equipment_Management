@@ -7,7 +7,27 @@
   <body>
     <%- include('./header', {user: user}) %>
     <h1><%= title %></h1>
-    <p><a href='/books'>本一覧</a></p>
-    <p><a href='/books/new'>本の新規登録</a></p>
+    <h2>本</h2>
+    <p><a href='/books'>一覧</a></p>
+    <% if (user) { %>
+      <p><a href='/books/new'>新規登録</a></p>
+      <p><a href='/books/checkout'>借りる</a></p>
+      <p><a href='/books/return'>返す</a></p>
+    <% } else { %>
+      <p>新規登録</p>
+      <p>借りる</p>
+      <p>返す</p>
+    <% } %>
+    <h2>備品</h2>
+    <p><a href='/equipment'>一覧</a></p>
+    <% if (user) { %>
+      <p><a href='/equipment/new'>新規登録</a></p>
+      <p><a href='/equipment/checkout'>借りる</a></p>
+      <p><a href='/equipment/return'>返す</a></p>
+    <% } else { %>
+      <p>新規登録</p>
+      <p>借りる</p>
+      <p>返す</p>
+    <% } %>
   </body>
 </html>

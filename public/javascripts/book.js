@@ -1,13 +1,4 @@
-$(document).ready(() => {
-  const date = new Date();
-  $('#boughtAt').val(
-    date.getFullYear() + '-' +
-    (date.getMonth() + 1) + '-' +
-    date.getDate()
-  );
-});
-
-function searchISBN() {
+function searchISBNfromGoogle() {
   console.log('ISBNを検索します．');
   const isbn = $('#isbn').val();
   if (!isbn) {
@@ -36,7 +27,80 @@ function searchISBN() {
   });
 }
 
+function searchISBNfromDB() {
+  const isbn = $('#isbn').val();
+  if (!isbn) {
+    alert('ISBNを入力して下さい．');
+    return;
+  } else if (!$.isNumeric(isbn)) {
+    alert('数値で入力して下さい．');
+    return;
+  }
+  window.location.href = '/books/checkout?isbn=' + isbn;
+}
+
+
 function setImage() {
   const src = $('#thumbnail').val();
   $('.thumbnail').attr('src', src);
+}
+
+function getParam() {
+  const url = location.search.substring(1).split('&');
+  const val = url[0].split('=');
+  if (val[0] == 'isbn') {
+    return val[1];
+  } else {
+    return null;
+  }
+}
+
+function confirmCheckout(user, isbn) {
+  if(window.confirm('この本を借りますか？')) {
+    const form = document.createElement('form');
+    const req_user = document.createElement('input');
+    const req_isbn = document.createElement('input');
+
+    form.method = 'POST';
+    form.action = '/books/checkout';
+
+    req_user.type = 'hidden';
+    req_user.name = 'user';
+    req_user.value = user;
+
+    req_isbn.type = 'hidden';
+    req_isbn.name = 'isbn';
+    req_isbn.value = isbn;
+
+    form.appendChild(req_user);
+    form.appendChild(req_isbn);
+    document.body.appendChild(form);
+
+    form.submit();
+  }
+}
+
+function confirmReturn(user, isbn) {
+  if(window.confirm('この本を返却しますか？')) {
+    const form = document.createElement('form');
+    const req_user = document.createElement('input');
+    const req_isbn = document.createElement('input');
+
+    form.method = 'POST';
+    form.action = '/books/return';
+
+    req_user.type = 'hidden';
+    req_user.name = 'user';
+    req_user.value = user;
+
+    req_isbn.type = 'hidden';
+    req_isbn.name = 'isbn';
+    req_isbn.value = isbn;
+
+    form.appendChild(req_user);
+    form.appendChild(req_isbn);
+    document.body.appendChild(form);
+
+    form.submit();
+  }
 }

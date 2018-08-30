@@ -6,6 +6,11 @@
   </head>
   <body>
     <%- include('./header', {user: user}) %>
+    <%# useridとusernameを対応付け %>
+    <% let users = {}; %>
+    <% for (let i = 0, l = books_user.length; i < l; i++) { %>
+    <%   users[books_user[i].userid] = books_user[i].username; %>
+    <% } %>
     <h1><%= title %></h1>
     <table border="1">
       <tr>
@@ -16,17 +21,28 @@
         <th>在庫</th>
         <th>借りている人</th>
       </tr>
-      <% for(var i=0; i<books_info.length; i++) { %>
+      <% for (let i=0, l = books_info.length; i < l; i++) { %>
         <tr>
           <td><img src="<%= books_info[i].thumbnail %>"></td>
           <td><a href="/books/detail/<%= books_info[i].id %>"><%= books_info[i].title %></a></td>
           <td><%= books_info[i].authors %></td>
           <td><%= books_info[i].categories %></td>
           <td><%= books_manage[i].stock %></td>
-          <td><%= books_manage[i].borrowedBy %></td>
+          <td>
+            <%# 借りている人がいる場合 %>
+            <% if (books_manage[i].borrowedBy) { %>
+              <%# 複数人が借りている場合,で分割 %>
+              <% const borrowers = books_manage[i].borrowedBy.split(','); %>
+              <% for (let j = 0, k = borrowers.length; j < k; j++) { %>
+                <%= users[borrowers[j]] %>
+                <% if (j != k - 1) { %>
+                  <%= '，' %>
+                <% } %>
+              <% } %>
+            <% } %>
+          </td>
         </tr>
       <% } %>
     </table>
-
   </body>
 </html>

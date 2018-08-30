@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <title>松下組備品管理システム - <%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/javascripts/book.js"></script>
+  </head>
+  <body>
+    <%- include('./header', {user: user}) %>
+    <h1><%= title %></h1>
+
+    <% if (books_manage.length > 0) { %>
+      <% let isbn_list = Array(books_info.length); %>
+      <% for (let i = 0, l = books_info.length; i < l; i++) { %>
+      <%   isbn_list[i] = books_info[i].isbn; %>
+      <% } %>
+      <table border="1">
+        <tr>
+          <th>画像</th>
+          <th>題名</th>
+          <th>著者</th>
+          <th>カテゴリ</th>
+          <th>貸出日</th>
+          <th>返却</th>
+        </tr>
+        <% for (let i=0, l = books_manage.length; i < l; i++) { %>
+          <tr>
+            <td><img src="<%= books_info[isbn_list.indexOf(books_manage[i].isbn)].thumbnail %>"></td>
+            <td><%= books_info[isbn_list.indexOf(books_manage[i].isbn)].title %></a></td>
+            <td><%= books_info[isbn_list.indexOf(books_manage[i].isbn)].authors %></td>
+            <td><%= books_info[isbn_list.indexOf(books_manage[i].isbn)].categories %></td>
+            <td><%= books_manage[i].borrowedAt %></td>
+            <td><input type='button' value='返す' onClick='confirmReturn("<%= user.userid %>", <%= books_manage[i].isbn %>)'></td>
+          </tr>
+        <% } %>
+      </table>
+    <% } else { %>
+      借りている本はありません．
+    <% } %>
+  </body>
+</html>
