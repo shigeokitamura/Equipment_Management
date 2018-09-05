@@ -14,11 +14,11 @@ module.exports = {
       },
       boughtAt: Sequelize.DATEONLY,
       isBorrowed: Sequelize.BOOLEAN,
-      borrowedBy: Sequelize.STRING,
+      borrowedBy: Sequelize.TEXT,
       borrowedAt: Sequelize.DATEONLY,
-      returnedBy: Sequelize.STRING,
-      returnedBy: Sequelize.DATEONLY,
-      remark: Sequelize.STRING,
+      returnedBy: Sequelize.TEXT,
+      returnedAt: Sequelize.DATEONLY,
+      remark: Sequelize.TEXT,
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

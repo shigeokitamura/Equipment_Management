@@ -14,11 +14,11 @@ const BookInfo = sequelize.define('BookInfo', {
     type: Sequelize.INTEGER,
     unique: true
   },
-  title: Sequelize.STRING,
-  authors: Sequelize.STRING,
-  description: Sequelize.STRING,
-  categories: Sequelize.STRING,
-  thumbnail: Sequelize.STRING
+  title: Sequelize.TEXT,
+  authors: Sequelize.TEXT,
+  description: Sequelize.TEXT,
+  categories: Sequelize.TEXT,
+  thumbnail: Sequelize.TEXT
 });
 
 const BookManage = sequelize.define('BookManage', {
@@ -28,9 +28,9 @@ const BookManage = sequelize.define('BookManage', {
   },
   boughtAt: Sequelize.DATE,
   stock: Sequelize.INTEGER,
-  borrowedBy: Sequelize.STRING,
+  borrowedBy: Sequelize.TEXT,
   borrowedAt: Sequelize.DATE,
-  returnedBy: Sequelize.STRING,
+  returnedBy: Sequelize.TEXT,
   returnedAt: Sequelize.DATE
 });
 

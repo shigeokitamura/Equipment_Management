@@ -12,10 +12,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         unique: true
       },
-      name: Sequelize.STRING,
-      label: Sequelize.STRING,
-      categories: Sequelize.STRING,
-      thumbnail: Sequelize.STRING,
+      name: Sequelize.TEXT,
+      label: Sequelize.TEXT,
+      categories: Sequelize.TEXT,
+      thumbnail: Sequelize.TEXT,
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

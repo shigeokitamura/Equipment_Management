@@ -1,7 +1,7 @@
 // Require all the stuff
 const Sequelize = require('sequelize');
 const env       = process.env.NODE_ENV || 'development';
-const config    = require(__dirname + '../config/config.json')[env];
+const config    = require(__dirname + '/../config/config.json')[env];
 
 // Setup sequelize db connection
 const sequelize = new Sequelize(config.database, config.username, config.password, config);
@@ -11,24 +11,24 @@ const EquipmentInfo = sequelize.define('EquipmentInfo', {
     type: Sequelize.INTEGER,
     unique: true
   },
-  name: Sequelize.STRING,
-  label: Sequelize.STRING,
-  categories: Sequelize.STRING,
-  thumbnail: Sequelize.STRING
+  name: Sequelize.TEXT,
+  label: Sequelize.TEXT,
+  categories: Sequelize.TEXT,
+  thumbnail: Sequelize.TEXT
 });
 
-const EquipmentManage = sequelize.define('EquipmentManage' {
+const EquipmentManage = sequelize.define('EquipmentManage', {
   barcode: {
     type: Sequelize.INTEGER,
     unique: true
   },
   boughtAt: Sequelize.DATEONLY,
   isBorrowed: Sequelize.BOOLEAN,
-  borrowedBy: Sequelize.STRING,
+  borrowedBy: Sequelize.TEXT,
   borrowedAt: Sequelize.DATEONLY,
-  returnedBy: Sequelize.STRING,
-  returnedBy: Sequelize.DATEONLY,
-  remark: Sequelize.STRING
+  returnedBy: Sequelize.TEXT,
+  returnedAt: Sequelize.DATEONLY,
+  remark: Sequelize.TEXT
 });
 
 module.exports.info = EquipmentInfo;

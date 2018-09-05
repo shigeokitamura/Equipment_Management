@@ -13,12 +13,12 @@ module.exports = {
           type: Sequelize.INTEGER,
           unique: true
         },
-        boughtAt: Sequelize.DATE,
+        boughtAt: Sequelize.DATEONLY,
         stock: Sequelize.INTEGER,
-        borrowedBy: Sequelize.STRING,
-        borrowedAt: Sequelize.DATE,
-        returnedBy: Sequelize.STRING,
-        returnedAt: Sequelize.DATE,
+        borrowedBy: Sequelize.TEXT,
+        borrowedAt: Sequelize.DATEONLY,
+        returnedBy: Sequelize.TEXT,
+        returnedAt: Sequelize.DATEONLY,
         createdAt: {
           type: Sequelize.DATE
         },

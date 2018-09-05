@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <title>松下組備品管理システム - <%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <%- include('./header', {user: user}) %>
+    <%# useridとusernameを対応付け %>
+    <% let users = {}; %>
+    <% for (let i = 0, l = equipments_user.length; i < l; i++) { %>
+    <%   users[equipments_user[i].userid] = equipments_user[i].username; %>
+    <% } %>
+    <h1><%= title %></h1>
+    <table border="1">
+      <tr>
+        <th>画像</th>
+        <th>名前</th>
+        <th>備品シール</th>
+        <th>カテゴリ</th>
+        <th>借りている人</th>
+      </tr>
+      <% for (let i=0, l = equipments_info.length; i < l; i++) { %>
+        <tr>
+          <td><img src="<%= equipments_info[i].thumbnail %>"></td>
+          <td><a href="/equipments/detail/<%= equipments_info[i].id %>"><%= equipments_info[i].name %></a></td>
+          <td><%= equipments_info[i].label %></td>
+          <td><%= equipments_info[i].categories %></td>
+          <td>
+            <%# 借りている人がいる場合 %>
+            <% if (equipments_manage[i].borrowedBy) { %>
+              <%# 複数人が借りている場合,で分割 %>
+              <% const borrowers = equipments_manage[i].borrowedBy.split(','); %>
+              <% for (let j = 0, k = borrowers.length; j < k; j++) { %>
+                <%= users[borrowers[j]] %>
+                <% if (j != k - 1) { %>
+                  <%= '，' %>
+                <% } %>
+              <% } %>
+            <% } %>
+          </td>
+        </tr>
+      <% } %>
+    </table>
+    <%- include('./footer') %>
+  </body>
+</html>

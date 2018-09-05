@@ -1,0 +1,44 @@
+<table border=1>
+  <tr>
+    <td rowspan="10"><img src="<%= equipment_info.thumbnail %>"></td>
+    <th>名前</th>
+    <td><%= equipment_info.name %></td>
+  </tr>
+  <tr>
+    <th>備品シール</th>
+    <td><%= equipment_info.label %></td>
+  </tr>
+  <tr>
+    <th>カテゴリ</th>
+    <td><%= equipment_info.categories %></td>
+  </tr>
+  <tr>
+    <th>備考</th>
+    <td><%= equipment_manage.remark %></td>
+  </tr>
+  <tr>
+    <th>購入日</th>
+    <td><%= equipment_manage.boughtAt %></td>
+  </tr>
+  <tr>
+    <th>借りている人</th>
+    <td id=borrowedBy><%= equipment_manage.borrowedBy %></td>
+  </tr>
+  <tr>
+    <th>貸出日</th>
+    <td><%= equipment_manage.borrowedAt %></td>
+  </tr>
+  <tr>
+    <th>最終返却者</th>
+    <td id=returnedBy><%= equipment_manage.returnedBy %></td>
+  </tr>
+  <tr>
+    <th>返却日</th>
+    <td><%= equipment_manage.returnedAt %></td>
+  </tr>
+</table>
+<% if (user) { %>
+  <% if (!equipment_manage.isBorrowed) { %>
+    <input type='button' value='借りる' onClick='confirmCheckout("<%= user.userid %>", <%= equipment_info.barcode %>)'>
+  <% } %>
+<% } %>

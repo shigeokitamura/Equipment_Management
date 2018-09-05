@@ -13,11 +13,11 @@ module.exports = {
           type: Sequelize.INTEGER,
           unique: true
         },
-        title: Sequelize.STRING,
-        authors: Sequelize.STRING,
-        description: Sequelize.STRING,
-        categories: Sequelize.STRING,
-        thumbnail: Sequelize.STRING,
+        title: Sequelize.TEXT,
+        authors: Sequelize.TEXT,
+        description: Sequelize.TEXT,
+        categories: Sequelize.TEXT,
+        thumbnail: Sequelize.TEXT,
         createdAt: {
           type: Sequelize.DATE
         },

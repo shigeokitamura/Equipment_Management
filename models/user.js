@@ -12,11 +12,11 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
 // A helper to define the User model with username, password fields
 const User = sequelize.define('User', {
   userid: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
     unique: true
   },
-  username: Sequelize.STRING,
-  password: Sequelize.STRING,
+  username: Sequelize.TEXT,
+  password: Sequelize.TEXT,
   grade: Sequelize.INTEGER
 });
 

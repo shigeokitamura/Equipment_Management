@@ -4,12 +4,12 @@
     <title>松下組備品管理システム - <%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="/javascripts/book.js"></script>
+    <script src="/javascripts/equipment.js"></script>
     <script type="text/javascript">
       $(document).ready(() => {
-        const isbn = getParam();
-        if (isbn) {
-          $('#isbn').val(isbn);
+        const barcode = getParam();
+        if (barcode) {
+          $('#barcode').val(barcode);
         }
       });
     </script>
@@ -17,16 +17,16 @@
   <body>
     <%- include('./header', {user: user}) %>
     <h1><%= title %></h1>
-    <form method="get" action="/books/checkout">
+    <form method="get" action="/equipments/checkout">
       <p>
-        ISBN:
-        <input type="text" name="isbn" id="isbn" required="true"/>
-        <button type="button" name="button" onclick="searchISBNfromDB()">検索</button>
+        バーコード:
+        <input type="text" name="barcode" id="barcode" required="true"/>
+        <button type="button" name="button" onclick="searchBarcodefromDB()">検索</button>
       </p>
     </form>
     <%= error %>
-    <% if (book_info) { %>
-      <%- include('./book_info', {user: user, book_info: book_info, book_manage: book_manage}) %>
+    <% if (equipment_info) { %>
+      <%- include('./equipment_info', {user: user, equipment_info: equipment_info, equipment_manage: equipment_manage}) %>
     <% } %>
     <%- include('./footer') %>
   </body>

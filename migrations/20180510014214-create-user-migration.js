@@ -10,11 +10,11 @@ module.exports = {
           autoIncrement: true
         },
         userid: {
-          type: Sequelize.STRING,
+          type: Sequelize.TEXT,
           unique: true
         },
-        username: Sequelize.STRING,
-        password: Sequelize.STRING,
+        username: Sequelize.TEXT,
+        password: Sequelize.TEXT,
         grade: Sequelize.INTEGER,
         createdAt: {
           type: Sequelize.DATE

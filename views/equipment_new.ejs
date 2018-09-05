@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <title>松下組備品管理システム - <%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/javascripts/equipment.js"></script>
+    <script type="text/javascript">
+      $(document).ready(() => {
+        const date = new Date();
+        $('#boughtAt').val(
+          date.getFullYear() + '-' +
+          (date.getMonth() + 1) + '-' +
+          date.getDate()
+        );
+      });
+    </script>
+  </head>
+  <body>
+    <%- include('./header', {user: user}) %>
+    <h1><%= title %></h1>
+    <form action="/equipments/new" method='post'>
+      <fieldset>
+        バーコード：
+        <input type="text" name="barcode" id="barcode" required="true"/><br>
+        名前：
+        <input type="text" name="name" id="name" required="true"/><br>
+        備品シール：
+        <input type="text" name="label" id="label" required="true"/><br>
+        カテゴリ：
+        <input type="text" name="categories" id="categories"/><br>
+        購入日：
+        <input type="text" name="boughtAt" id="boughtAt"/><br>
+        画像：
+        <input type="text" name="thumbnail" id="thumbnail"/>
+        <button type="button" name="button" onclick="setImage()">表示</button>
+        <br>
+        <img src="" class="thumbnail"><br>
+        <%= error %><br>
+        <input type="submit" value="登録">
+      </fieldset>
+    </form>
+    <%- include('./footer') %>
+  </body>
+</html>

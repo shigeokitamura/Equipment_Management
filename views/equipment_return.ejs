@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <title>松下組備品管理システム - <%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/javascripts/equipment.js"></script>
+  </head>
+  <body>
+    <%- include('./header', {user: user}) %>
+    <h1><%= title %></h1>
+
+    <% if (equipments_manage.length > 0) { %>
+      <% let barcode_list = Array(equipments_info.length); %>
+      <% for (let i = 0, l = equipments_info.length; i < l; i++) { %>
+      <%   barcode_list[i] = equipments_info[i].barcode; %>
+      <% } %>
+      <table border="1">
+        <tr>
+          <th>画像</th>
+          <th>名前</th>
+          <th>備品シール</th>
+          <th>カテゴリ</th>
+          <th>貸出日</th>
+          <th>返却</th>
+        </tr>
+        <% for (let i=0, l = equipments_manage.length; i < l; i++) { %>
+          <tr>
+            <td><img src="<%= equipments_info[barcode_list.indexOf(equipments_manage[i].barcode)].thumbnail %>"></td>
+            <td><%= equipments_info[barcode_list.indexOf(equipments_manage[i].barcode)].name %></a></td>
+            <td><%= equipments_info[barcode_list.indexOf(equipments_manage[i].barcode)].label %></td>
+            <td><%= equipments_info[barcode_list.indexOf(equipments_manage[i].barcode)].categories %></td>
+            <td><%= equipments_manage[i].borrowedAt %></td>
+            <td><input type='button' value='返す' onClick='confirmReturn("<%= user.userid %>", <%= equipments_manage[i].barcode %>)'></td>
+          </tr>
+        <% } %>
+      </table>
+    <% } else { %>
+      借りている備品はありません．
+    <% } %>
+    <%- include('./footer') %>
+  </body>
+</html>
