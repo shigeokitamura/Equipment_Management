@@ -2,11 +2,11 @@
 <html lang="ja">
   <head>
     <title>松下組備品管理システム - <%= title %></title>
-    <link rel='stylesheet' href='stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
     <h1><%= title %></h1>
-    <form action="users/signup" method='post'>
+    <form action="/equipment/users/signup" method='post'>
       <fieldset>
         <input type="text" name="userid" id="userid" placeholder="ID（例：k123456）" required="true"/><br>
         <input type="text" name='username' id='username' placeholder='名前（例：松下光範）' required='true'><br>

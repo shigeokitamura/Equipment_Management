@@ -5,7 +5,7 @@ const User = require('../models/user');
 
 const isAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) return next();
-  else return res.redirect('/');
+  else return res.redirect('/equipment/');
 }
 
 router.get('/', (req, res, next) => {
@@ -48,12 +48,12 @@ router.post('/new', isAuthenticated, (req, res, next) => {
       .then(() => {
         Book.manage.create(req.body)
         .then(() => {
-          res.redirect('/books');
+          res.redirect('/equipment/books');
         });
       });
     } else {
       req.flash('error', '既に登録されています');
-      res.redirect('/books/new');
+      res.redirect('/equipment/books/new');
     }
   });
 });
@@ -130,10 +130,14 @@ router.post('/checkout', isAuthenticated, (req, res, next) => {
       res.send('ERROR');
     } else {
       let username = book_manage.borrowedBy;
-      if (username != '') {  //既に借りている人がいたら,で区切る
+      console.log("username:" + username);
+      if (username == 'null') {  //既に借りている人がいたら,で区切る
+        username = req.body.user;
+      } else {
         username += ',';
+        username += req.body.user;
       }
-      username += req.body.user;
+
       Book.manage
       .update({
         borrowedBy: username,
@@ -144,7 +148,7 @@ router.post('/checkout', isAuthenticated, (req, res, next) => {
       })
       .then(result => {
         console.log(result);
-        res.redirect('/books');
+        res.redirect('/equipment/books');
       });
     }
   });
@@ -203,7 +207,7 @@ router.post('/return', isAuthenticated, (req, res, next) => {
     })
     .then(result => {
       console.log(result);
-      res.redirect('/books/return');
+      res.redirect('/equipment/books/return');
     });
   });
 });

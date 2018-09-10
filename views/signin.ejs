@@ -2,11 +2,11 @@
 <html lang="ja">
   <head>
     <title>松下組備品管理システム - <%= title %></title>
-    <link rel='stylesheet' href='stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
     <h2><%= title %></h2>
-    <form method="post" action="users/signin">
+    <form method="post" action="/equipment/users/signin">
       <span><%= error %></span>
       <p>
         <input type="text" name="username" id="username"

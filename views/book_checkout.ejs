@@ -2,9 +2,9 @@
 <html lang="ja">
   <head>
     <title>松下組備品管理システム - <%= title %></title>
-    <link rel='stylesheet' href='stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="javascripts/book.js"></script>
+    <script src="/javascripts/book.js"></script>
     <script type="text/javascript">
       $(document).ready(() => {
         const isbn = getParam();
@@ -17,7 +17,7 @@
   <body>
     <%- include('./header', {user: user}) %>
     <h1><%= title %></h1>
-    <form method="get" action="books/checkout">
+    <form method="get" action="/equipment/books/checkout">
       <p>
         ISBN:
         <input type="text" name="isbn" id="isbn" required="true"/>

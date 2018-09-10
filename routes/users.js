@@ -34,8 +34,8 @@ router.get('/login', (req, res, next) => {
 });
 
 router.post('/signin', passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/users/login',
+  successRedirect: '/equipment/',
+  failureRedirect: '/equipment/users/login',
   failureFlash: true
 }));
 
@@ -48,14 +48,14 @@ router.get('/signup', (req, res, next) => {
 
 router.get('/logout', (req, res) => {
     req.logout();
-    res.redirect('/');
+    res.redirect('/equipment/');
 });
 
 router.get('/:user_id/destroy', (req, res, next) => {
   User.destroy({
     where: {id: req.params.user_id}
   }).then(() => {
-      res.redirect('/users');
+      res.redirect('/equipment/users/');
     });
 });
 
@@ -70,7 +70,7 @@ router.get('/:user_id/profile', (req, res, next) => {
 router.post('/signup', (req, res, next) => {
   if (req.body.password != req.body.password_confirm) {
     req.flash('error', 'パスワードが一致しません');
-    res.redirect('/users/signup')
+    res.redirect('/equipment/users/signup')
   } else {
     User.findOne({where: {userid : req.body.userid} })
     .then(user => {
@@ -78,11 +78,11 @@ router.post('/signup', (req, res, next) => {
         req.body.password = encrypt(req.body.password);
         User.create(req.body)
         .then(user => {
-            res.redirect('/');
+            res.redirect('/equipment/');
         });
       } else {
         req.flash('error', '既に登録されています');
-        res.redirect('/users/signup');
+        res.redirect('/equipment/users/signup/');
       }
     });
   }

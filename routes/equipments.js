@@ -5,7 +5,7 @@ const User = require('../models/user');
 
 const isAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) return next();
-  else return res.redirect('/');
+  else return res.redirect('/equipment/');
 }
 
 router.get('/', (req, res, next) => {
@@ -48,12 +48,12 @@ router.post('/new', isAuthenticated, (req, res, next) => {
       .then(() => {
         Equipment.manage.create(req.body)
         .then(() => {
-          res.redirect('/equipments');
+          res.redirect('/equipment/equipments');
         });
       });
     } else {
       req.flash('error', '既に登録されています');
-      res.redirect('/equipments/new');
+      res.redirect('/equipment/equipments/new');
     }
   });
 });
@@ -139,7 +139,7 @@ router.post('/checkout', isAuthenticated, (req, res, next) => {
       })
       .then(result => {
         console.log(result);
-        res.redirect('/equipments');
+        res.redirect('/equipment/equipments');
       });
     }
   });
@@ -188,7 +188,7 @@ router.post('/return', isAuthenticated, (req, res, next) => {
       })
       .then(result => {
         console.log(result);
-        res.redirect('/return');
+        res.redirect('/equipment/equipments/return');
       });
     }
   });
