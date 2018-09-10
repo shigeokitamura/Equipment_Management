@@ -131,7 +131,7 @@ router.post('/checkout', isAuthenticated, (req, res, next) => {
     } else {
       let username = book_manage.borrowedBy;
       console.log("username:" + username);
-      if (username == 'null' || username == '') {  //既に借りている人がいたら,で区切る
+      if (username == 'null' || username == '' || username == null || username == NULL) {  //既に借りている人がいたら,で区切る
         username = req.body.user;
       } else {
         username += ',';
