@@ -2,28 +2,28 @@
 <html lang="ja">
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='stylesheets/style.css' />
   </head>
   <body>
     <%- include('./header', {user: user}) %>
     <h1><%= title %></h1>
     <h2>本</h2>
-    <p><a href='/books'>一覧</a></p>
+    <p><a href='books'>一覧</a></p>
     <% if (user) { %>
-      <p><a href='/books/new'>新規登録</a></p>
-      <p><a href='/books/checkout'>借りる</a></p>
-      <p><a href='/books/return'>返す</a></p>
+      <p><a href='books/new'>新規登録</a></p>
+      <p><a href='books/checkout'>借りる</a></p>
+      <p><a href='books/return'>返す</a></p>
     <% } else { %>
       <p>新規登録</p>
       <p>借りる</p>
       <p>返す</p>
     <% } %>
     <h2>備品</h2>
-    <p><a href='/equipments'>一覧</a></p>
+    <p><a href='equipments'>一覧</a></p>
     <% if (user) { %>
-      <p><a href='/equipments/new'>新規登録</a></p>
-      <p><a href='/equipments/checkout'>借りる</a></p>
-      <p><a href='/equipments/return'>返す</a></p>
+      <p><a href='equipments/new'>新規登録</a></p>
+      <p><a href='equipments/checkout'>借りる</a></p>
+      <p><a href='equipments/return'>返す</a></p>
     <% } else { %>
       <p>新規登録</p>
       <p>借りる</p>

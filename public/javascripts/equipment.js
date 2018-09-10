@@ -3,7 +3,7 @@ $(window).on('load', () => {
     const user = $('#borrowedBy').text();
     $('#borrowedBy').text('');
     $.ajax({
-      url: '/users/userid_to_username?userid=' + user,
+      url: 'users/userid_to_username?userid=' + user,
       type: 'GET',
       timeout: 10000
     }).done(data => {
@@ -13,7 +13,7 @@ $(window).on('load', () => {
   }
   if ($('#returnedBy').text() != "") {
     $.ajax({
-        url: '/users/userid_to_username?userid=' + $('#returnedBy').text(),
+        url: 'users/userid_to_username?userid=' + $('#returnedBy').text(),
         type: 'GET',
         timeout: 10000
     }).done(data => {
@@ -32,7 +32,7 @@ function searchBarcodefromDB() {
     alert('数値で入力して下さい．');
     return;
   }
-  window.location.href = '/equipments/checkout?barcode=' + barcode;
+  window.location.href = 'equipments/checkout?barcode=' + barcode;
 }
 
 
@@ -58,7 +58,7 @@ function confirmCheckout(user, barcode) {
     const req_code = document.createElement('input');
 
     form.method = 'POST';
-    form.action = '/equipments/checkout';
+    form.action = 'equipments/checkout';
 
     req_user.type = 'hidden';
     req_user.name = 'user';
@@ -83,7 +83,7 @@ function confirmReturn(user, barcode) {
     const req_code = document.createElement('input');
 
     form.method = 'POST';
-    form.action = '/equipments/return';
+    form.action = 'equipments/return';
 
     req_user.type = 'hidden';
     req_user.name = 'user';

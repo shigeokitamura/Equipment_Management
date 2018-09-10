@@ -2,7 +2,7 @@
 <html lang="ja">
   <head>
     <title>松下組備品管理システム - <%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='stylesheets/style.css' />
   </head>
   <body>
     <%- include('./header', {user: user}) %>
@@ -23,7 +23,7 @@
       <% for (let i=0, l = equipments_info.length; i < l; i++) { %>
         <tr>
           <td><img src="<%= equipments_info[i].thumbnail %>"></td>
-          <td><a href="/equipments/detail/<%= equipments_info[i].id %>"><%= equipments_info[i].name %></a></td>
+          <td><a href="equipments/detail/<%= equipments_info[i].id %>"><%= equipments_info[i].name %></a></td>
           <td><%= equipments_info[i].label %></td>
           <td><%= equipments_info[i].categories %></td>
           <td>

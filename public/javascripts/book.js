@@ -4,7 +4,7 @@ $(window).on('load', () => {
     $('#borrowedBy').text('');
     users.forEach((user, idx) => {
       $.ajax({
-          url: '/users/userid_to_username?userid=' + user,
+          url: 'users/userid_to_username?userid=' + user,
           type: 'GET',
           timeout: 10000
       }).done(data => {
@@ -18,7 +18,7 @@ $(window).on('load', () => {
   }
   if ($('#returnedBy').text() != "") {
     $.ajax({
-        url: '/users/userid_to_username?userid=' + $('#returnedBy').text(),
+        url: 'users/userid_to_username?userid=' + $('#returnedBy').text(),
         type: 'GET',
         timeout: 10000
     }).done(data => {
@@ -66,7 +66,7 @@ function searchISBNfromDB() {
     alert('数値で入力して下さい．');
     return;
   }
-  window.location.href = '/books/checkout?isbn=' + isbn;
+  window.location.href = 'books/checkout?isbn=' + isbn;
 }
 
 
@@ -117,7 +117,7 @@ function confirmReturn(user, isbn) {
     const req_isbn = document.createElement('input');
 
     form.method = 'POST';
-    form.action = '/books/return';
+    form.action = 'books/return';
 
     req_user.type = 'hidden';
     req_user.name = 'user';
